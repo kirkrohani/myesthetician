@@ -13,9 +13,8 @@ class App extends Component {
   componentDidMount() {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
-      .then(customers => this.setState(() => {
-        return { customers: customers }
-      },
+      .then(customers => this.setState(
+        () => { return { customers: customers } },
         () => {
           console.log('Customers in State: ', this.state.customers)
         }))
@@ -23,8 +22,21 @@ class App extends Component {
   }
 
   render() {
+    console.log('rendering....');
       return (
         <div className="App">
+          <br />
+          <input onChange={
+            (evt) => {
+              const filteredCustomers = this.state.customers.filter(customer => customer.name.toLowerCase().includes(evt.target.value));
+
+              this.setState({customers: filteredCustomers});
+            }
+          }
+            className='search-box'
+            type='search'
+            placeholder='search customers'
+          />
           {this.state.customers.map((customer, index) => <h1 key={index}>{customer.name}</h1>)}
         </div>
       );
