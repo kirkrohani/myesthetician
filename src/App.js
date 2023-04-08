@@ -2,6 +2,7 @@ import './App.css';
 
 import { Component } from 'react';
 import CustomerList from './components/customers/customer-list.component';
+import SearchBox from './components/search/search-box.component';
 
 class App extends Component {
   constructor() {
@@ -32,23 +33,17 @@ class App extends Component {
     this.setState(() => { return { filteredCustomers } });
   }
 
-
-
   render() {
-    const { filterCustomers } = this;
     const { filteredCustomers } = this.state;
+    const { filterCustomers } = this;
       console.log('rendering...', filteredCustomers);
       
     return (
       <div className="App">
-          <br />
-          <input onChange={filterCustomers}
-            className='search-box'
-            type='search'
-            placeholder='search customers'
-          />
-         <CustomerList customers={filteredCustomers} />
-        </div>
+        <br />
+        <SearchBox onSearchChange={filterCustomers} placeholderText={'search customer'} />
+        <CustomerList customers={filteredCustomers} />
+      </div>
       )
   }
 }
