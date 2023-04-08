@@ -3,11 +3,12 @@ import { Component } from 'react';
 class CustomerList extends Component {
 
   render() {
-    const { filteredCustomers } = this.props;
- 
+    const { customers } = this.props;
+     console.log('rendering CustomerList...', customers);
+
     return (
       <div>
-        {filteredCustomers.map((customer, index) => <h1 key={index}>{customer.name}</h1>)}
+        {customers.map((customer, index) => <h1 key={index}>{customer.name}</h1>)}
       </div>
     )
   }
