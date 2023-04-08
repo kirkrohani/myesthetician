@@ -41,7 +41,7 @@ class App extends Component {
     return (
       <div className="App">
         <br />
-        <SearchBox onSearchChange={filterCustomers} placeholderText={'search customer'} />
+        <SearchBox onSearchChange={filterCustomers} placeholderText={'search customer'} className={'customer-search-box'} />
         <CustomerList customers={filteredCustomers} />
       </div>
       )

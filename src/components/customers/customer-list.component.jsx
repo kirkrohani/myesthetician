@@ -1,3 +1,6 @@
+import './card.styles.css';
+import './customer-list.styles.css'
+
 import { Component } from 'react';
 
 class CustomerList extends Component {
@@ -7,8 +10,16 @@ class CustomerList extends Component {
      console.log('rendering CustomerList...', customers);
 
     return (
-      <div>
-        {customers.map((customer, index) => <h1 key={index}>{customer.name}</h1>)}
+      <div className='customer-list'>
+        {customers.map((customer, index) => {
+          const { name, email } = customer;
+          return (<div key={index} className='customer-container'>
+            <img alt={`customer ${name}`} src={`https://robohash.org/${index}?set=set4&size=150x150`} />
+            <h2>{name}</h2>
+            <p>{email}</p>
+          </div>)
+        }
+        )}
       </div>
     )
   }
