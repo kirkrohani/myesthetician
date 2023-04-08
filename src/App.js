@@ -28,7 +28,7 @@ class App extends Component {
       .catch(error => console.log('Handle this error: ', error));
   }
 
-  filterCustomers(event) {
+  filterCustomers = (event) => {
     const filteredCustomers = this.state.customers.filter(customer => customer.name.toLowerCase().includes(event.target.value));
     this.setState(() => { return { filteredCustomers } });
   }
@@ -37,16 +37,17 @@ class App extends Component {
 
   render() {
     console.log('rendering....');
-      
+    const { filterCustomers } = this;
+    const { filteredCustomers } = this.state;
     return (
       <div className="App">
         <br />
-        <input onChange={(evt) => { this.filterCustomers(evt) }}
+        <input onChange={filterCustomers}
           className='search-box'
           type='search'
           placeholder='search customers'
         />
-        {this.state.filteredCustomers.map((customer, index) => <h1 key={index}>{customer.name}</h1>)}
+        {filteredCustomers.map((customer, index) => <h1 key={index}>{customer.name}</h1>)}
       </div>
     );
   }
