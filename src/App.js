@@ -1,10 +1,10 @@
 import './App.css';
 
 import { Component } from 'react';
+import CustomerList from './components/customers/customer-list.component';
 
 class App extends Component {
   constructor() {
-    console.log('constructor');
     super();
     this.state = {
       customers: [],
@@ -13,7 +13,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
       .then(customers => this.setState(
@@ -36,7 +35,6 @@ class App extends Component {
 
 
   render() {
-    console.log('rendering....');
     const { filterCustomers } = this;
     const { filteredCustomers } = this.state;
     return (
@@ -47,7 +45,7 @@ class App extends Component {
           type='search'
           placeholder='search customers'
         />
-        {filteredCustomers.map((customer, index) => <h1 key={index}>{customer.name}</h1>)}
+        <CustomerList filteredCustomers={filteredCustomers} />
       </div>
     );
   }
