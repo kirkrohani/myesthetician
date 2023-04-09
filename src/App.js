@@ -1,52 +1,40 @@
 import './App.css';
 
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
+
 import CustomerList from './components/customers/customer-list.component';
 import SearchBox from './components/search/search-box.component';
 
-class App extends Component {
-  constructor() {
-    console.log('constructor...');
-    super();
-    this.state = {
-      customers: [],
-      filteredCustomers: []
-    };
-  }
+const App = () => {
+  console.log('rendering App...');
+  const [customers, setCustomers] = useState([]);
+  const [filteredCustomers, setFilteredCustomers] = useState([]);
 
-  componentDidMount() {
-    console.log('componentDidMount...');
+  useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(customers =>
-        this.setState(() => {
-          return {
-            customers: customers,
-          filteredCustomers: customers}
-        }))
-      .catch(error => console.log('Handle this error: ', error));
-  }
+    .then(response => response.json())
+      .then(customers => {
+        console.log('fetched customers: ', customers);
+        setCustomers(customers);
+        setFilteredCustomers(customers);
+      })
+    .catch(error => console.log('Handle this error: ', error));
+  }, [])
 
-  filterCustomers = (event) => {
+  const filterCustomers = (event) => {
     console.log('filterCustomers...');
-    const filteredCustomers = this.state.customers.filter(customer => customer.name.toLowerCase().includes(event.target.value));
-    this.setState(() => { return { filteredCustomers } });
+    const filteredCustomers = customers.filter(customer => customer.name.toLowerCase().includes(event.target.value));
+    setFilteredCustomers(filteredCustomers);
   }
 
-  render() {
-    const { filteredCustomers } = this.state;
-    const { filterCustomers } = this;
-      console.log('rendering...', filteredCustomers);
-      
-    return (
-      <div className="App">
-        <br />
-        <h1 className='app-title'>My Esthetician</h1>
-        <SearchBox onSearchChange={filterCustomers} placeholderText={'search customer'} className={'customer-search-box'} />
-        <CustomerList customers={filteredCustomers} />
-      </div>
-      )
-  }
+  return (
+    <div className="App">
+      <br />
+      <h1 className='app-title'>My Esthetician</h1>
+      <SearchBox onSearchChange={filterCustomers} placeholderText={'search customer'} className={'customer-search-box'} />
+      <CustomerList customers={filteredCustomers} />
+    </div>
+  );
 }
 
 export default App;
